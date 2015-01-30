@@ -14,13 +14,15 @@ function init()
 	storm.io.set_pull(storm.io.PULL_UP, storm.io.D9)
 	storm.io.set_pull(storm.io.PULL_UP, storm.io.D10)
 	storm.io.set_pull(storm.io.PULL_UP, storm.io.D11)
+	storm.io.set_mode(storm.io.OUTPUT, storm.io.D2, storm.io.D3, storm.io.D4, storm.io.D5)
 	good_temp = 0
-	LED.start()
 	storm.io.watch_all(storm.io.FALLING, up_button, function() good_temp += delta_degree end)
 	storm.io.watch_all(storm.io.FALLING, down_button, function() good_temp -= delta_degree end)
-	
+	storm.io.invokePeriodically(storm.os.SECOND, function() 
 end
 
+function check_temp()
+	storm.io.
 init()
 
 cord.enter_loop()
