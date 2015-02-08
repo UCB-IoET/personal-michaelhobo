@@ -1,10 +1,10 @@
--- format: "id:{func1:arg1:arg2:...argN}{func2:arg1:arg2:...argM}..."
+-- format: "id:{func1:documentation:arg1:arg2:...argN}{func2:documentation:arg1:arg2:...argM}..."
 id = "1"
 
 available = {
-	["buzzer"]		=	{"This is a buzzer. Arg0 is the state to switch it to. (0 is off, 1 is on)", {[0]="[01]"}},
-	["blue_LED"]	=	{"This is a blue LED. Arg0 is the state to switch it to (0 is off, 1 is on)", {[0]="[01]"}},
-	["get_buzzer"] = {"Get the buzzer's state. 0 is off, 1 is on.", {}},
+	["buzzer"] =	{["documentation"]="This is a buzzer. Arg0 is the state to switch it to. (0 is off, 1 is on)", ["arguments"]={[0]="[01]"}},
+	["blue_LED"] =	{"This is a blue LED. Arg0 is the state to switch it to (0 is off, 1 is on)", {[0]="[01]"}},
+	["get_buzzer"] = {["documentation"]="Get the buzzer's state. 0 is off, 1 is on.", ["arguments"]={}},
 }
 
 break_func = function(func_string)
