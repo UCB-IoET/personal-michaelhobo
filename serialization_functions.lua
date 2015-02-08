@@ -51,7 +51,7 @@ call_func = function(func_string)
 end
 
 serialize_available = function()
-	serialize_table(available)
+	return serialize_table(available)
 end
 
 serialize_table = function(table)
@@ -63,6 +63,7 @@ serialize_table = function(table)
 		end
 		msg = msg .. "}"
 	end
+	--print(msg)
 	return msg
 end
 
