@@ -25,6 +25,7 @@ break_func = function(func_string)
 	for str in string.gmatch(func_string, "[^:]+") do
 		if count == 0 then
 			funcname = str
+			print(funcname)
 		elseif count == 1 then
 			documentation = str
 		else
@@ -33,15 +34,21 @@ break_func = function(func_string)
 		count = count + 1
 	end
 	count = count - 2
+	print(funcname)
 	return funcname, documentation, arguments, count
 end
 
 call_func = function(func_string)
-	local funcname, arguments, count = break_func(func_string)
-	if count == len(available[funcname]) then
+	local funcname, documentation, arguments, count = break_func(func_string)
+	print("calling with " .. funcname .. ", " .. documentation .. ", argument[0]=" .. arguments[0] .. ", " .. count)
+	if count == len(available[funcname]["arguments"]) then
+		print("count good")
 		for key = 0, len(available[funcname]["arguments"])-1 do
+			print("key " .. key .. " good")
 			if arguments[key]:match(available[funcname]["arguments"][key]) then
+				print("matches regex")
 				_G[funcname](unpack(arguments))
+				print("called")
 				return true
 			else
 				return false
