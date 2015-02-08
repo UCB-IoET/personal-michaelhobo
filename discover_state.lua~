@@ -33,7 +33,6 @@ server = function()
 				  print(storm.net.sendto(ssock, payload, from, cport))
 				  brd:flash(1)
 			       end)
-     storm.os.invokePeriodically(5*storm.os.MINUTE, storm.net.sendto(ssock, "I'm here!", "ff02::1", p)) 
 end
 
 server()			-- every node runs the echo server
@@ -45,13 +44,10 @@ blu = LED:new("D2")		-- LEDS on starter shield
 grn = LED:new("D3")
 red = LED:new("D4")
 count = 0
-servers = {}
 -- create client socket
 csock = storm.net.udpsocket(cport, 
 			    function(payload, from, port)
 			       red:flash(3)
-                               if from not in servers 
-			      	 table.insert(servers, from)
 			       print (string.format("echo from %s port %d: %s",from,port,payload))
 			    end)
 
@@ -61,12 +57,9 @@ client = function()
    local msg = string.format("0x%04x says count=%d", storm.os.nodeid(), count)
    print("send:", msg)
    -- send upd echo to link local all nodes multicast
-   -- 
-   --while ack ~= 0 do
-     storm.net.sendto(csock, msg, "ff02::1", p) 
-     --ack =  
-     count = count + 1
-     grn:flash(1)
+   storm.net.sendto(csock, msg, "ff02::1", p) 
+   count = count + 1
+   grn:flash(1)
 end
 
 -- button press runs client
