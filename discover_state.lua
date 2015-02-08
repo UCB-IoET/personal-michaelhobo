@@ -23,14 +23,17 @@ ipaddrs = string.format("%02x%02x:%02x%02x:%02x%02x:%02x%02x::%02x%02x:%02x%02x:
 print("ip addr", ipaddrs)
 print("node id", storm.os.nodeid())
 cport = 49152
-
+name = "button machine"
+func_1 = "button"
+state = 0
 -- create echo server as handler
 server = function()
    ssock = storm.net.udpsocket(p, 
 			       function(payload, from, port)
 				  brd:flash(1)
 				  print (string.format("from %s port %d: %s",from,port,payload))
-				  print(storm.net.sendto(ssock, payload, from, cport))
+					functions = string.format("%s: (%s, %d)", name, func_1, state)
+				  print(storm.net.sendto(ssock, functions, from, cport))
 				  brd:flash(1)
 			       end)
      storm.os.invokePeriodically(5*storm.os.MINUTE, storm.net.sendto(ssock, "I'm here!", "ff02::1", p)) 
