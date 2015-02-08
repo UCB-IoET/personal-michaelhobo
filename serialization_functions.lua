@@ -4,10 +4,19 @@ id = "1"
 --Manually add what functions you would like available to the world into this table. Put the actual name of the function you want called. Arguments use regex.
 available = {
 	["buzzer"] =	{["documentation"]="This is a buzzer. Arg0 is the state to switch it to. (0 is off, 1 is on)", ["arguments"]={[0]="[01]"}},
-	["blue_LED"] =	{"This is a blue LED. Arg0 is the state to switch it to (0 is off, 1 is on)", {[0]="[01]"}},
+	["blue_LED"] =	{["documentation"]="This is a blue LED. Arg0 is the state to switch it to (0 is off, 1 is on)", ["arguments"]={[0]="[01]"}},
 	["get_buzzer"] = {["documentation"]="Get the buzzer's state. 0 is off, 1 is on.", ["arguments"]={}},
 	["get_id"] = {["documentation"]="Gets the ID of this node.", ["arguments"]={}}
 }
+len = function(table)
+	local count = 0
+	if next(table) then
+		for k,v in pairs(table) do
+			count = count + 1
+		end
+	end
+	return count
+end
 
 break_func = function(func_string)
 	local count = 0
@@ -29,8 +38,8 @@ end
 
 call_func = function(func_string)
 	local funcname, arguments, count = break_func(func_string)
-	if count == #available[funcname] then
-		for key = 0, #available[funcname]["arguments"] do
+	if count == len(available[funcname]) then
+		for key = 0, len(available[funcname]["arguments"])-1 do
 			if arguments[key]:match(available[funcname]["arguments"][key]) then
 				_G[funcname](unpack(arguments))
 				return true
@@ -49,7 +58,7 @@ serialize_table = function(table)
 	local msg = id .. ":"
 	for func,arg_list in pairs(table) do
 		msg = msg .. "{" .. func .. ":" .. table[func]["documentation"]
-		for arg_num = 0,#table[func]["arguments"] do
+		for arg_num = 0,len(table[func]["arguments"])-1 do
 			msg = msg .. ":" .. table[func]["arguments"][arg_num]
 		end
 		msg = msg .. "}"
