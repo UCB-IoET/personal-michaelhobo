@@ -46,7 +46,7 @@ node = function(ID)
         if table [from] == nil then
 					print("in if")
           table[from] = {["value"]= deserialize_table(payload),
-							["destruct"]= storm.os.invokeLater(5*storm.os.SEC, delFromTable, from)}
+							["destruct"]= storm.os.invokeLater(5*storm.os.SECOND, delFromTable, from)}
 	  print(len(table))
         else 
 					print("in else")
