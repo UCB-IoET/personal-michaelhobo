@@ -44,7 +44,7 @@ node = function(ID)
           table[from] = {[value]= deserialize_table(payload), ["destruct"]={storm.os.invokeLater(5*storm.os.SECOND, delFromTable, from)}}
         else 
           storm.os.cancel(table[from]["destruct"])
-          table[from] = {[value]= deserialize_table(payload), ["destruct"]={storm.os.invokeLater(5*storm.os.MINUTE, delFromTable, from)}}
+          table[from] = {[value]= deserialize_table(payload), ["destruct"]={storm.os.invokeLater(5*storm.os.SECOND, delFromTable, from)}}
 				end
 			end)
 	priv_sock = storm.net.udpsocket(priv_port,
@@ -54,7 +54,7 @@ node = function(ID)
 					all_good = call_func(string.sub(str, 2, -2)) and all_good
 				end
 			end)
-	storm.os.invokePeriodically(storm.os.MINUTE, storm.net.sendto(ssock, serialize_available() , "ff02::1", pub_port))
+	storm.os.invokePeriodically(storm.os.SECOND, storm.net.sendto(ssock, serialize_available() , "ff02::1", pub_port))
 end
 
 function make_available(func_name, documentation, arguments)
