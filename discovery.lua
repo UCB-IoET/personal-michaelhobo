@@ -45,16 +45,15 @@ node = function(ID)
 				print(deserialize_table(payload))
         if table [from] == nil then
 					print("in if")
-          table[from] = {["value"]= deserialize_table(payload),["destruct"]= function () 
-							storm.os.invokeLater(5*storm.os.SECOND, delFromTable, from)
-						end }
+          table[from] = {["value"]= deserialize_table(payload),
+							["destruct"]= storm.os.invokeLater(5*storm.os.SEC, delFromTable, from)}
 	  print(len(table))
         else 
+					print("in else")
           storm.os.cancel(table[from]["destruct"])
 	  print("deleted old cancel fn")
-          table[from] = {["value"]= deserialize_table(payload), ["destruct"]= function ()
-							storm.os.invokeLater(5*storm.os.SECOND, delFromTable, from)
-						end }
+          table[from] = {["value"]= deserialize_table(payload),
+							["destruct"]= storm.os.invokeLater(5*storm.os.SECOND, delFromTable, from)}
 				end
 			end)
 
