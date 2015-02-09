@@ -25,3 +25,7 @@ set_green_led = function(state)
 end
 
 send_call("red-red2", "set_red_led", {[0]="1"})
+
+sh = require "stormsh"
+sh.start()
+cord.enter_loop()

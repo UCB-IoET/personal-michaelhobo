@@ -41,7 +41,7 @@ node = function(ID)
 		function(payload, from, port)
 				table[from] = deserialize_table(payload)
         if table [from] == nil then
-          table[from] = {[value]= deserialize_table(payload), ["destruct"]={storm.os.invokeLater(5*storm.os.MINUTE, delFromTable, from)}}
+          table[from] = {[value]= deserialize_table(payload), ["destruct"]={storm.os.invokeLater(5*storm.os.SECOND, delFromTable, from)}}
         else 
           storm.os.cancel(table[from]["destruct"])
           table[from] = {[value]= deserialize_table(payload), ["destruct"]={storm.os.invokeLater(5*storm.os.MINUTE, delFromTable, from)}}
