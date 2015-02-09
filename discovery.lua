@@ -1,5 +1,4 @@
 require "cord" -- scheduler
-require("serial")
 require("storm")
 ipaddr = storm.os.getipaddr()
 	ipaddrs = string.format("%02x%02x:%02x%02x:%02x%02x:%02x%02x::%02x%02x:%02x%02x:%02x%02x:%02x%02x",
@@ -29,6 +28,9 @@ table = {}
 delFromTable = function(id)
 	table[id] = nil
 end
+
+show_discovered = function()
+	
 
 	-- Initialize this node for discovery
 node = function(ID)
