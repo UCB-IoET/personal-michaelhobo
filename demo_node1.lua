@@ -3,12 +3,12 @@ require("storm")
 require("cord")
 shield = require("starter")
 
-make_available("set_red1_led", "sets red1 LED", {[0]="[01]"})
+make_available("set_red2_led", "sets red2 LED", {[0]="[01]"})
 make_available("set_red_led", "sets red LED", {[0]="[01]"})
 
-node("blue-green")
+node("red-red2")
 
-set_red1_led = function(state)
+set_red2_led = function(state)
 	if state == "1" then
 		shield.LED.on("red2")
 	elseif state == "0" then
@@ -16,7 +16,7 @@ set_red1_led = function(state)
 	end
 end
 
-set_red2_led = function(state)
+set_red_led = function(state)
 	if state == "1" then
 		shield.LED.on("red")
 	elseif state == "0" then

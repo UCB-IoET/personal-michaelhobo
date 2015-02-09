@@ -30,7 +30,7 @@ delFromTable = function(id)
 end
 
 show_discovered = function()
-	
+end 	
 
 	-- Initialize this node for discovery
 node = function(ID)
