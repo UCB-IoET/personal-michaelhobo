@@ -30,7 +30,7 @@ delFromTable = function(id)
 end
 
 show_discovered = function()
-end
+end 	
 	
 
 	-- Initialize this node for discovery
@@ -171,7 +171,7 @@ end
 function find_ip(ID)
 	for k,v in pairs(table) do 
      cur_ID = string.sub(v["value"], string.find(str, "[^:]+"))
-			print(cur_ID)
+     print(cur_ID)
      if cur_ID == ID then 
          return k 
      end 
