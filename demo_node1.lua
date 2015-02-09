@@ -24,4 +24,6 @@ set_red_led = function(state)
 	end
 end
 
-
+sh = require "stormsh"
+sh.start()
+cord.enter_loop()
