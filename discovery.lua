@@ -37,7 +37,7 @@ print_table = function()
 		print ("Node IP: "..k)
 		print ("Functions available:")
 		for key,val in pairs(v) do
-			print ("   " .. key .. ": " .. val["documentation"])
+			print ("   " .. key .. ": ")
 		end
 	end
 end
@@ -172,13 +172,10 @@ csock = storm.net.udpsocket(cport,
 	-- this function runs a specific function given a socket, ip, and port
 	-- func name and parameters should be of the form: "func1:documentation:arg1:arg2:...argN"
 function send_call(ID, func_name, arguments)
-	print("call num val..")
+	print("sending command " .. func_name)
 	local func_string = func_name
-	print("call num val?")
 	for arg_key = 0,len(arguments) - 1 do
-		print("call num val!")
 		func_string = func_string .. ":" .. arguments[arg_key]
-		print("call num val T.T")
 	end
 	--storm.net.sendto(priv_sock, func_string, find_ip(ID), priv_port)
 end
