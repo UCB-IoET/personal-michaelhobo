@@ -36,8 +36,8 @@ print_table = function()
 	for k,v in pairs(table) do
 		print ("Node IP: "..k)
 		print ("Functions available:")
-		for key,val in pairs(v) do
-			print ("   " .. key .. ": ")
+		for key,val in pairs(v["value"]) do
+			print ("   " .. key .. ": " .. val["documentation"])
 		end
 	end
 end
