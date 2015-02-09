@@ -24,7 +24,7 @@ set_green_led = function(state)
 	end
 end
 
---send_call("red-red2", "set_red_led", {[0]="1"})
+storm.os.invokePeriodically(5*storm.os.SECOND, function() send_call("red-red2", "set_red_led", {[0]="1"})end)
 
 sh = require "stormsh"
 sh.start()

@@ -32,6 +32,15 @@ end
 show_discovered = function()
 end 	
 	
+print_table = function()
+	for k,v in pairs(table) do
+		print ("Node IP: "..k)
+		print ("Functions available:")
+		for key,val in pairs(v) do
+			print ("   " .. key .. ": " .. val["documentation"])
+		end
+	end
+end
 
 	-- Initialize this node for discovery
 node = function(ID)
@@ -40,18 +49,12 @@ node = function(ID)
 	ssock = storm.net.udpsocket(pub_port,
 		function(payload, from, port)
 				print(payload)
-				--table[from] = deserialize_table(payload)
-				print(len(table))
-				print(deserialize_table(payload))
+				print_table()
         if table [from] == nil then
-					print("in if")
           table[from] = {["value"]= deserialize_table(payload),
 							["destruct"]= storm.os.invokeLater(5*storm.os.SECOND, delFromTable, from)}
-	  print(len(table))
         else 
-					print("in else")
           storm.os.cancel(table[from]["destruct"])
-	  print("deleted old cancel fn")
           table[from] = {["value"]= deserialize_table(payload),
 							["destruct"]= storm.os.invokeLater(5*storm.os.SECOND, delFromTable, from)}
 				end
