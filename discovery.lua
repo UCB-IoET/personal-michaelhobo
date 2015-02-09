@@ -41,12 +41,15 @@ node = function(ID)
 		function(payload, from, port)
 				print(payload)
 				table[from] = deserialize_table(payload)
+				print(len(table))
         if table [from] == nil then
           table[from] = {["value"]= deserialize_table(payload),["destruct"]= function () 
 							storm.os.invokeLater(5*storm.os.SECOND, delFromTable, from)
 						end }
+	  print(len(table))
         else 
           storm.os.cancel(table[from]["destruct"])
+	  print("deleted old cancel fn")
           table[from] = {["value"]= deserialize_table(payload), ["destruct"]= function ()
 							storm.os.invokeLater(5*storm.os.SECOND, delFromTable, from)
 						end }
