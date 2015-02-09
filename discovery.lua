@@ -11,8 +11,8 @@ ipaddr = storm.os.getipaddr()
 print("ip addr", ipaddrs)
 print("node id", storm.os.nodeid())
 
-p = 9
-cport = 50000
+pub_port = 9
+priv_port = 50000
 count = 0
 
 
@@ -30,13 +30,14 @@ delFromTable = function(id)
 end
 
 show_discovered = function()
+end
 	
 
 	-- Initialize this node for discovery
 node = function(ID)
 	id = ID
 	-- create public socket
-	ssock = storm.net.udpsocket(p,
+	ssock = storm.net.udpsocket(pub_port,
 		function(payload, from, port)
 				table[from] = deserialize_table(payload)
         if table [from] == nil then
@@ -53,7 +54,7 @@ node = function(ID)
 					all_good = call_func(string.sub(str, 2, -2)) and all_good
 				end
 			end)
-	storm.os.invokePeriodically(storm.os.MINUTE, storm.net.sendto(ssock, serialize_available() , "ff02::1", p))
+	storm.os.invokePeriodically(storm.os.MINUTE, storm.net.sendto(ssock, serialize_available() , "ff02::1", pub_port))
 end
 
 function make_available(func_name, documentation, arguments)
@@ -156,18 +157,23 @@ csock = storm.net.udpsocket(cport,
 	-- this function runs a specific function given a socket, ip, and port
 	-- func name and parameters should be of the form: "func1:documentation:arg1:arg2:...argN"
 function send_call(ID, func_name, arguments)
+	print("call num val..")
 	local func_string = func_name
-	for arg_key in 0,len(arguments) - 1 do
+	print("call num val?")
+	for arg_key = 0,len(arguments) - 1 do
+		print("call num val!")
 		func_string = func_string .. ":" .. arguments[arg_key]
+		print("call num val T.T")
 	end
-	storm.net.sendto(priv_sock, func_string, find_ip(ID), cport)
+	--storm.net.sendto(priv_sock, func_string, find_ip(ID), priv_port)
 end
 
 function find_ip(ID)
- for k,v in pairs(table) do 
+	for k,v in pairs(table) do 
      cur_ID = string.sub(v["value"], string.find(str, "[^:]+"))
+			print(cur_ID)
      if cur_ID == ID then 
          return k 
      end 
- end
-end  
+	end
+end
