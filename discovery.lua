@@ -39,6 +39,7 @@ node = function(ID)
 	-- create public socket
 	ssock = storm.net.udpsocket(pub_port,
 		function(payload, from, port)
+				print(payload)
 				table[from] = deserialize_table(payload)
         if table [from] == nil then
           table[from] = {[value]= deserialize_table(payload), ["destruct"]={storm.os.invokeLater(5*storm.os.SECOND, delFromTable, from)}}
