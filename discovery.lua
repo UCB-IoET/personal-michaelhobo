@@ -37,7 +37,7 @@ node = function(ID)
 	ssock = storm.net.udpsocket(p,
 		function(payload, from, port)
 				table[from] = deserialize_table(payload)
-        if table [from] = nil then
+        if table [from] == nil then
           table[from] = {[value]= deserialize_table(payload), ["destruct"]={storm.os.invokeLater(5*storm.os.MINUTE, delFromTable, from)}}
         else 
           storm.os.cancel(table[from]["destruct"])
@@ -48,7 +48,7 @@ node = function(ID)
 		function(payload, from, port)
 				all_good = true
 				for str in string.gmatch(payload, "{[^}]+}") do
-					all_good = call_func(string.sub(str, 2, -2)) && all_good
+					all_good = call_func(string.sub(str, 2, -2)) and all_good
 				end
 			end)
 	storm.os.invokePeriodically(storm.os.MINUTE, storm.net.sendto(ssock, serialize_available() , "ff02::1", p))
@@ -160,3 +160,12 @@ function send_call(ID, func_name, arguments)
 	end
 	storm.net.sendto(priv_sock, func_string, find_ip(ID), cport)
 end
+
+function find_ip(ID)
+ for k,v in pairs(table) do 
+     cur_ID = string.sub(v["value"], string.find(str, "[^:]+"))
+     if cur_ID == ID then 
+         return k 
+     end 
+ end
+end  
